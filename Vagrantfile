@@ -4,8 +4,12 @@ require "yaml"
 
 Vagrant.configure("2") do |config|
 
-  # Load maching specific config 
-  local_config = YAML.load_file("local_config.yaml");
+  # Load config 
+  if File.file?("local_config.yaml")
+    local_config = YAML.load_file("local_config.yaml");
+  else
+    local_config = YAML.load_file("default_config.yaml");
+  end
   
   # VBox plugin
   config.vagrant.plugins = ["vagrant-vbguest"]
