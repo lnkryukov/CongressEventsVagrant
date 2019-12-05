@@ -1,3 +1,5 @@
 .vagrant
 
 ssh/id*
+
+local_config.yaml
