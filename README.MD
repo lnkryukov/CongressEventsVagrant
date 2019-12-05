@@ -1,5 +1,7 @@
 # Использование 
 
+0. Для получения доступа к github из виртуальной машины положить в папку `ssh` ключи от github под именами `id_rsa` и `id_rsa.pub`
+
 1. Установить плагин vbguest версии 0.21  
 ```
 vagrant plugin install vagrant-vbguest --plugin-version 0.21
