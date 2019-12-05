@@ -11,13 +11,6 @@ Vagrant.configure("2") do |config|
     local_config = YAML.load_file("default_config.yaml");
   end
   
-  # VBox plugin
-  config.vagrant.plugins = ["vagrant-vbguest"]
-
-  if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vbguest.auto_update = false
-  end
-  
   config.vm.box = "centos/7"
   config.vm.define "Congress"
   config.vm.boot_timeout = 1200
@@ -25,7 +18,7 @@ Vagrant.configure("2") do |config|
   # Sync folders from host
   config.vm.synced_folder ".", "/home/vagrant/congress-events"
 
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.network "forwarded_port", guest: 8080, host: 8001
 
   config.vm.provider "virtualbox" do |vb|
 
@@ -55,9 +48,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file",
     source: "ssh",
     destination: "/home/vagrant/.ssh"
-  config.vm.provision "file",
-    source: "pg_hba.conf",
-    destination: "/home/vagrant/pg_hba.conf"
   config.vm.provision "shell",
     name: "DB_config",
     env: {
@@ -73,13 +63,15 @@ Vagrant.configure("2") do |config|
       chmod 600 /home/vagrant/.ssh/*
       if git clone git@github.com:EventsExpertsMIEM/EventsProj.git 2>/dev/null; then
         echo "Cloned"
+        cd /home/vagrant/EventsProj
+        git checkout mir_init-func
       else 
         echo "Already cloned, skipping"
       fi
     SHELL
   config.vm.provision "shell",
         name: "Python_dependancies",
-        inline: "python3.6 -m pip install -r EventsProj/app/requirements.txt"
+        inline: "python3.6 -m pip install -r /home/vagrant/EventsProj/app/requirements.txt"
       
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
