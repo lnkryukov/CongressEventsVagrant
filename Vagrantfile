@@ -56,19 +56,19 @@ Vagrant.configure("2") do |config|
       "DB_PASSWORD" => local_config["db_password"]
     },
     path: "postgres.sh"
-  config.vm.provision "shell",
-    name: "Git",
-    privileged: false,
-    inline: <<-SHELL
-      chmod 600 /home/vagrant/.ssh/*
-      if git clone git@github.com:EventsExpertsMIEM/EventsProj.git 2>/dev/null; then
-        cd /home/vagrant/EventsProj
-        git checkout mir_init-func
-      else 
-        echo "Already cloned, skipping"
-      fi
-    SHELL
-  config.vm.provision "shell",
-        name: "Python_dependancies",
-        inline: "python3.6 -m pip install -r /home/vagrant/EventsProj/app/requirements.txt"
+#   config.vm.provision "shell",
+#     name: "Git",
+#     privileged: false,
+#     inline: <<-SHELL
+#       chmod 600 /home/vagrant/.ssh/*
+#       if git clone git@github.com:EventsExpertsMIEM/EventsProj.git 2>/dev/null; then
+#         cd /home/vagrant/EventsProj
+#         git checkout mir_init-func
+#       else 
+#         echo "Already cloned, skipping"
+#       fi
+#     SHELL
+#   config.vm.provision "shell",
+#         name: "Python_dependancies",
+#         inline: "python3.6 -m pip install -r /home/vagrant/EventsProj/app/requirements.txt"
 end
