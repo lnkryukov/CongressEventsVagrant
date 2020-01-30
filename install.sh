@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if $( ! command -v git > /dev/null); then
+    yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+fi
+
 yum update -y
 
 for i in $PACKAGES; do
